@@ -24,6 +24,11 @@ class App extends React.Component {
 
   }
 
+  /*
+  * @param {int} length
+  * Button Functionality - Create an array of values and update state according to
+  * currently set length
+  */
   generateNewArray(length){
 
     let values = [];
@@ -32,11 +37,11 @@ class App extends React.Component {
       values.push(i);
     }    
 
+    //TO DO - Create Randomized Values
+
     this.setState({
       values: values 
     });
-    // console.log('VALUES', values);
-    // console.log('STATE VALUES:', this.state.values);
 
   }
 
