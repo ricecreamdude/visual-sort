@@ -1,3 +1,22 @@
+# Visual Sort
+
+This project's idea comes from Clément Mihailescu, a YouTuber and former Google Engineer. (https://www.youtube.com/watch?v=n4t_-NjY_Sg&t=531s)
+
+I am building this project up in an attempt to improve my skills in React and to gain familiarity with sorting algorithms.
+
+
+## Features
+
+Merge Sort
+Quick Sort
+
+Highlighting active/switched/validated 
+
+Run Time?
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
