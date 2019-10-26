@@ -16,6 +16,18 @@ Run Time?
 
 
 
+## Algorithms 
+
+### TO-DO
+Fisher-Yates Shuffle 
+helpers.js
+https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+
+Merge Sort
+Quick Sort
+
+
+# create-react-app boilerplate README.md
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
