@@ -1,3 +1,34 @@
+# Visual Sort
+
+This project's idea comes from Clément Mihailescu, a YouTuber and former Google Engineer. (https://www.youtube.com/watch?v=n4t_-NjY_Sg&t=531s)
+
+I am building this project up in an attempt to improve my skills in React and to gain familiarity with sorting algorithms.
+
+
+## Features
+
+Merge Sort
+Quick Sort
+
+Highlighting active/switched/validated 
+
+Run Time?
+
+
+
+## Algorithms 
+
+### TO-DO
+Fisher-Yates Shuffle 
+helpers.js
+https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+
+Merge Sort
+Quick Sort
+
+
+# create-react-app boilerplate README.md
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
