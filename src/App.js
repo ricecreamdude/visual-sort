@@ -1,6 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+import {shuffleArray} from './helpers'
+
+
 
 class App extends React.Component {
 
@@ -37,13 +40,12 @@ class App extends React.Component {
       values.push(i);
     }    
 
-    //TO DO - Create Randomized Values
-
     this.setState({
-      values: values 
+      values: shuffleArray(values)
     });
 
   }
+
 
   testClickHandler() {
     this.generateNewArray(this.state.length);
