@@ -3,6 +3,8 @@ import './App.css';
 
 import {shuffleArray} from './helpers'
 
+import Bar from './component/Bar/bar';
+
 
 
 class App extends React.Component {
@@ -55,27 +57,45 @@ class App extends React.Component {
 
   render(){
 
+
+    let graph = function(){
+
+      this.state.values.map( value => {
+        let h = value * 50;
+        console.log('*********H: ',h)
+        return (<Bar 
+          height={h}
+        />)
+      })
+    }
+      // return (
+      //   {this.state.values.map( value => {
+      //     let h = value * 50;
+      //     <Bar 
+      //       height={h}
+      //     />
+      //   })}
+      // )
+
     return (
       <div className="App">
         <header className="App-header">
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
             Learn React
-          </a>
         </header>
-        <main>
-          <p>
-            <button onClick={this.testClickHandler}>HI CLICK ME</button>
-          </p>
+        <main
+          className='graphArea'
+        >
 
-
+          {graph}
+          {/* <Bar 
+            height={100}
+          />
+          <Bar 
+            height={100}
+          /> */}
         </main>
       </div>
     );
