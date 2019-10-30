@@ -5,8 +5,8 @@ function Bar(props){
   let styles = {
     bar: {
       height: props.height,
-      borderLeft: '3px solid black',
-      marginRight:'5px',
+      borderLeft: '5px solid black',
+      marginRight:'10px',
       float: 'left'
 
     }

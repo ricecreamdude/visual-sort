@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import {shuffleArray} from './helpers'
+import _ from 'underscore';
 
 import Bar from './component/Bar/bar';
 
@@ -14,18 +14,15 @@ class App extends React.Component {
 
     this.state = {
       values: [],
-      length: 20
+      length: 40
     }
-
-    this.generateNewArray = this.generateNewArray.bind(this);
-    this.testClickHandler = this.testClickHandler.bind(this);
 
   }
 
   componentDidMount(){
    
     //Load values with random values with this.state.length as upper bound;
-    this.generateNewArray(this.state.length);
+    this.generateNewArray();
 
   }
 
@@ -34,69 +31,71 @@ class App extends React.Component {
   * Button Functionality - Create an array of values and update state according to
   * currently set length
   */
-  generateNewArray(length){
+
+  //Create a recursive loop that console logs the value of each array element, one after another.
+  // 
+
+  onClickHandler = async () => {
+    let values = [...this.state.values];
+    for (let i = 0; i < values.length; i++){
+      await new Promise( (resolve) => {
+        setTimeout( () => {
+          resolve();
+        },50);
+
+        values[i] = values[i]+5;  
+        this.setState({values});
+        
+      })
+    }
+
+    //Found code for this here:
+    //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
+    //Section 4
+  }
+
+
+  generateNewArray = () => {
 
     let values = [];
+    let length = this.state.length;
+    for (var i = 0; i < length; i++) values.push(i);    
 
-    for (var i = 0; i < length; i++){
-      values.push(i);
-    }    
-
-    this.setState({
-      values: shuffleArray(values)
-    });
+    this.setState({ values: _.shuffle(values) });
 
   }
-
-
-  testClickHandler() {
-    this.generateNewArray(this.state.length);
-  }
-
-
 
   render(){
 
+    let renderedGraph = this.state.values.map( barValue => { 
+      
+      //Max height - min height / length of array for scaled values
+      let multiplier = 450 / (this.state.length);
+      
+      // Add the minimum height to the chart and multiply bar value by
+      // multiplier
+      let heightValue = (multiplier * barValue) + 50 
 
-    let graph = function(){
-
-      this.state.values.map( value => {
-        let h = value * 50;
-        console.log('*********H: ',h)
-        return (<Bar 
-          height={h}
-        />)
-      })
-    }
-      // return (
-      //   {this.state.values.map( value => {
-      //     let h = value * 50;
-      //     <Bar 
-      //       height={h}
-      //     />
-      //   })}
-      // )
+      return(
+        <Bar 
+          height={heightValue}
+          value={barValue}
+        />
+    )})
 
     return (
       <div className="App">
         <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-            Learn React
+          Visual Sort
+          <button onClick={this.onClickHandler}>Run Loop</button>
+          <button onClick={this.generateNewArray}>New Array</button>
         </header>
-        <main
-          className='graphArea'
-        >
-
-          {graph}
-          {/* <Bar 
-            height={100}
-          />
-          <Bar 
-            height={100}
-          /> */}
+        <main id="contentWrapper">
+          <div id="graphDiv">
+            {renderedGraph}
+          </div>
         </main>
+
       </div>
     );
   }
