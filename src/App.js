@@ -5,8 +5,6 @@ import _ from 'underscore';
 
 import Bar from './component/Bar/bar';
 
-
-
 class App extends React.Component {
 
   constructor(props){
@@ -20,31 +18,23 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-   
     //Load values with random values with this.state.length as upper bound;
     this.generateNewArray();
 
   }
 
-  /*
-  * @param {int} length
-  * Button Functionality - Create an array of values and update state according to
-  * currently set length
-  */
-
   //Create a recursive loop that console logs the value of each array element, one after another.
-  // 
-
   onClickHandler = async () => {
-    let values = [...this.state.values];
-    for (let i = 0; i < values.length; i++){
+    let bars = [...this.state.values];
+    for (let i = 0; i < bars.length; i++){
       await new Promise( (resolve) => {
+        
         setTimeout( () => {
           resolve();
         },50);
 
-        values[i] = values[i]+5;  
-        this.setState({values});
+        bars[i].status = 'active';  
+        this.setState({bars});
         
       })
     }
@@ -54,32 +44,43 @@ class App extends React.Component {
     //Section 4
   }
 
-
+  /*
+  * @param {int} length
+  * Button Functionality - Create an array of values and update state according to
+  * currently set length
+  */
   generateNewArray = () => {
 
     let values = [];
     let length = this.state.length;
-    for (var i = 0; i < length; i++) values.push(i);    
+    for (var i = 0; i < length; i++) {
+      let newBar = {
+        value: i,
+        status: 'normal'
+      }
+      values.push(newBar)
+    };    
 
     this.setState({ values: _.shuffle(values) });
 
   }
-
+  
   render(){
 
-    let renderedGraph = this.state.values.map( barValue => { 
+    let renderedGraph = this.state.values.map( bar => { 
       
       //Max height - min height / length of array for scaled values
       let multiplier = 450 / (this.state.length);
       
       // Add the minimum height to the chart and multiply bar value by
       // multiplier
-      let heightValue = (multiplier * barValue) + 50 
+      let heightValue = (multiplier * bar.value) + 50 
 
       return(
         <Bar 
           height={heightValue}
-          value={barValue}
+          value={bar.value}
+          status={bar.status}
         />
     )})
 

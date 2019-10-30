@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './bar.css';
+
 function Bar(props){
 
   let styles = {
@@ -8,12 +10,11 @@ function Bar(props){
       borderLeft: '5px solid black',
       marginRight:'10px',
       float: 'left'
-
     }
   }
 
   return(
-    <div style={styles.bar}></div>
+    <div style={styles.bar} className={props.status}></div>
   )
 }
 
