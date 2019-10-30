@@ -23,48 +23,65 @@ class App extends React.Component {
 
   }
 
-  //Create a recursive loop that console logs the value of each array element, one after another.
-  onClickHandler = async () => {
-    let bars = [...this.state.values];
-    for (let i = 0; i < bars.length; i++){
-      await new Promise( (resolve) => {
-        
-        setTimeout( () => {
-          resolve();
-        },50);
-
-        bars[i].status = 'active';  
-        this.setState({bars});
-        
-      })
-    }
-
-    //Found code for this here:
-    //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
-    //Section 4
-  }
-
   /*
   * @param {int} length
   * Button Functionality - Create an array of values and update state according to
   * currently set length
   */
-  generateNewArray = () => {
+ generateNewArray = () => {
 
-    let values = [];
-    let length = this.state.length;
-    for (var i = 0; i < length; i++) {
-      let newBar = {
-        value: i,
-        status: 'normal'
-      }
-      values.push(newBar)
-    };    
+  let values = [];
+  let length = this.state.length;
+  for (var i = 0; i < length; i++) {
+    let newBar = {
+      value: i,
+      status: 'normal'
+    }
+    values.push(newBar)
+  };    
 
-    this.setState({ values: _.shuffle(values) });
+  this.setState({ values: _.shuffle(values) });
 
+}
+
+
+
+  //Found code for this here:
+  //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
+  //Section 4
+
+  //Create a recursive loop that console logs the value of each array element, one after another.
+  scanArray = async () => {
+    let bars = [...this.state.values];
+    
+
+    for (let i = 0; i < bars.length; i++){
+      
+      bars[i].status = 'active';
+      this.setState({bars});
+
+      await new Promise( (resolve) => {
+        
+        setTimeout( () => {
+          resolve();
+          bars[i].status = 'normal';  
+          this.setState({bars});   
+        },50);
+
+        
+      })
+    }
+
+    //Our next function needs to go into the state of the application and make sure only a single
+    //'active' status exists during its scroll up
   }
+
+
   
+ 
+
+
+
   render(){
 
     let renderedGraph = this.state.values.map( bar => { 
@@ -88,7 +105,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           Visual Sort
-          <button onClick={this.onClickHandler}>Run Loop</button>
+          <button onClick={this.scanArray}>Run Loop</button>
           <button onClick={this.generateNewArray}>New Array</button>
         </header>
         <main id="contentWrapper">
