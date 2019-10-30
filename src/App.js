@@ -12,8 +12,10 @@ class App extends React.Component {
 
     this.state = {
       values: [],
-      length: 40
+      length: 40,
+      scanning: false,
     }
+
 
   }
 
@@ -52,6 +54,14 @@ class App extends React.Component {
 
   //Create a recursive loop that console logs the value of each array element, one after another.
   scanArray = async () => {
+    
+    //Prevent multiple scans from occuring
+    if(this.state.scanning){
+      return
+    }
+ 
+    this.setState({scanning: true});
+    
     let bars = [...this.state.values];
     let sorted = false;
 
@@ -81,9 +91,6 @@ class App extends React.Component {
 
               sorted = false;
 
-              // bars[i].status = "swapping";
-              // bars[i+1].status = "swapping"
-
               this.setState({bars})
 
             }
@@ -99,6 +106,7 @@ class App extends React.Component {
       }
     }
     
+    this.setState({scanning: false})
 
   }
 
