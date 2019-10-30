@@ -14,11 +14,8 @@ class App extends React.Component {
 
     this.state = {
       values: [],
-      length: 20
+      length: 40
     }
-
-    this.generateNewArray = this.generateNewArray.bind(this);
-    this.testClickHandler = this.testClickHandler.bind(this);
 
   }
 
@@ -48,55 +45,34 @@ class App extends React.Component {
 
   }
 
-
-  testClickHandler() {
-    this.generateNewArray(this.state.length);
-  }
-
-
-
   render(){
 
+    let renderedGraph = this.state.values.map( barValue => { 
+      
+      //Max height - min height / length of array for scaled values
+      let multiplier = 450 / (this.state.length);
+      
+      // Add the minimum height to the chart and multiply bar value by
+      // multiplier
+      let heightValue = (multiplier * barValue) + 50 
 
-    let graph = function(){
-
-      this.state.values.map( value => {
-        let h = value * 50;
-        console.log('*********H: ',h)
-        return (<Bar 
-          height={h}
-        />)
-      })
-    }
-      // return (
-      //   {this.state.values.map( value => {
-      //     let h = value * 50;
-      //     <Bar 
-      //       height={h}
-      //     />
-      //   })}
-      // )
+      return(
+        <Bar 
+          height={heightValue}
+          value={barValue}
+        />
+    )})
 
     return (
       <div className="App">
         <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-            Learn React
+          Visual Sort
         </header>
-        <main
-          className='graphArea'
-        >
-
-          {graph}
-          {/* <Bar 
-            height={100}
-          />
-          <Bar 
-            height={100}
-          /> */}
-        </main>
+        <main id="contentWrapper">
+          <div id="graphDiv">
+            {renderedGraph}
+          </div>
+         </main>
       </div>
     );
   }
