@@ -17,6 +17,8 @@ class App extends React.Component {
       length: 40
     }
 
+    this.onClickHandler = this.onClickHandler.bind(this);
+
   }
 
   componentDidMount(){
@@ -31,17 +33,43 @@ class App extends React.Component {
   * Button Functionality - Create an array of values and update state according to
   * currently set length
   */
+
+  // onClickHandler(){
+  //   let values = this.state.values;
+  //   //use setTimeout to iterate through each array value and apply class value
+  //   //of active
+
+  //   for( let i = 0; i < values.length; i ++){
+  //     const promise = new Promise((resolve, err) => {
+  //       const timeout = Math.random() * 100;
+  //       setTimeout( () => {
+  //         console.log('INDEX', i);
+  //       }, 100 * timeout)
+  //     });
+  //   }
+  //     doSetTimeout(values[i]);
+      
+  //     setTimeout( () => {
+  //       console.log('VALUES', values[i])      
+  //     }, 100)
+    
+
+  //   function doSetTimeout(val){
+  //     setTimeout( function() {
+  //       console.log('VALUES: ', val);
+  //     }, 5000)
+  //   }
+
+  // }
+
+
   generateNewArray(length){
 
     let values = [];
 
-    for (var i = 0; i < length; i++){
-      values.push(i);
-    }    
+    for (var i = 0; i < length; i++) values.push(i);    
 
-    this.setState({
-      values: shuffleArray(values)
-    });
+    this.setState({ values: shuffleArray(values) });
 
   }
 
@@ -67,12 +95,14 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           Visual Sort
+          <button onClick={this.onClickHandler}>Run Loop</button>
         </header>
         <main id="contentWrapper">
           <div id="graphDiv">
             {renderedGraph}
           </div>
-         </main>
+        </main>
+
       </div>
     );
   }
