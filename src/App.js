@@ -34,33 +34,29 @@ class App extends React.Component {
   * currently set length
   */
 
-  // onClickHandler(){
-  //   let values = this.state.values;
-  //   //use setTimeout to iterate through each array value and apply class value
-  //   //of active
+  //Create a recursive loop that console logs the value of each array element, one after another.
+  // 
 
-  //   for( let i = 0; i < values.length; i ++){
-  //     const promise = new Promise((resolve, err) => {
-  //       const timeout = Math.random() * 100;
-  //       setTimeout( () => {
-  //         console.log('INDEX', i);
-  //       }, 100 * timeout)
-  //     });
-  //   }
-  //     doSetTimeout(values[i]);
-      
-  //     setTimeout( () => {
-  //       console.log('VALUES', values[i])      
-  //     }, 100)
+  async onClickHandler(){
+    let values = [...this.state.values];
     
+    for (let i = 0; i < values.length; i++){
+      await new Promise( (resolve) => {
+        setTimeout( function(){
+          resolve();
+        },50);
 
-  //   function doSetTimeout(val){
-  //     setTimeout( function() {
-  //       console.log('VALUES: ', val);
-  //     }, 5000)
-  //   }
+        values[i] = values[i]+5;
+        this.setState({values});
+        
+        // console.log(values[i]);
+      })
+    }
 
-  // }
+    //Found code for this here:
+    //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
+    //Section 4
+  }
 
 
   generateNewArray(length){
