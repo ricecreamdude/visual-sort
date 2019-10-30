@@ -8,7 +8,8 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,4 +20,15 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+
+#contentWrapper{
+  text-align: center;
+  margin: 0 auto; 
+}
+
+#graphDiv{
+  display: inline-block;
+  max-width: 90%;
 }
