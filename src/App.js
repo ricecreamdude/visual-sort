@@ -17,6 +17,8 @@ class App extends React.Component {
 
   }
 
+  //BAR 'OBJECT'{value, status}
+
   componentDidMount(){
     //Load values with random values with this.state.length as upper bound;
     this.generateNewArray();
@@ -44,8 +46,6 @@ class App extends React.Component {
 
 }
 
-
-
   //Found code for this here:
   //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
   //Section 4
@@ -53,34 +53,81 @@ class App extends React.Component {
   //Create a recursive loop that console logs the value of each array element, one after another.
   scanArray = async () => {
     let bars = [...this.state.values];
+    let sorted = false;
+
+    while(!sorted){
+
+      //Sorted flag
+      sorted = true;
+
+      //Iterate through each bar stored in state
+      for (let i = 0; i < bars.length -1; i++){
+
+        //Begin operations on array value
+        bars[i].status = 'active';
+        this.setState({bars});
+
+        //Or could our operations happen inside the promise?
+        await new Promise( (resolve) => {
+          
+          //All of our code actions should happen in setTimeout
+          setTimeout( () => {
+  
+            if (bars[i].value > bars[i+1].value){
+              let temp = bars[i].value
+              
+              bars[i].value = bars[i + 1].value;
+              bars[i + 1].value = temp;
+
+              sorted = false;
+
+              // bars[i].status = "swapping";
+              // bars[i+1].status = "swapping"
+
+              this.setState({bars})
+
+            }
+            
+            bars[i].status = 'normal';
+
+            this.setState({bars});   
+            resolve();
+  
+          },10);
+  
+        })
+      }
+    }
     
 
-    for (let i = 0; i < bars.length; i++){
-      
-      bars[i].status = 'active';
-      this.setState({bars});
-
-      await new Promise( (resolve) => {
-        
-        setTimeout( () => {
-          resolve();
-          bars[i].status = 'normal';  
-          this.setState({bars});   
-        },50);
-
-        
-      })
-    }
-
-    //Our next function needs to go into the state of the application and make sure only a single
-    //'active' status exists during its scroll up
   }
 
+  //Our next function needs to go into the state of the application and make sure only a single
+  //'active' status exists during its scroll up
 
-  
- 
+  bubbleSort = () => {
 
+    let sorted = false;
+    let values = [...this.state.values]
 
+    while (!sorted) {
+      sorted = true;
+      for(var i=0; i < values.length - 1; i++) {
+        if(values[i].value > values[i+1].value) {
+          let temp = values[i].value;
+
+          values[i].value = values[i+1].value;
+          values[i+1].value = temp;
+          
+          sorted = false;
+          
+          this.setState({values:values})
+        }
+
+      }
+    }
+
+  }
 
   render(){
 
