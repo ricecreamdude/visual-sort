@@ -6,7 +6,7 @@ function Bar(props){
     bar: {
       height: props.height,
       borderLeft: '5px solid black',
-      marginRight:'5px',
+      marginRight:'10px',
       float: 'left'
 
     }

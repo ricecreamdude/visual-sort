@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import {shuffleArray} from './helpers'
+import _ from 'underscore';
 
 import Bar from './component/Bar/bar';
 
@@ -17,14 +17,12 @@ class App extends React.Component {
       length: 40
     }
 
-    this.onClickHandler = this.onClickHandler.bind(this);
-
   }
 
   componentDidMount(){
    
     //Load values with random values with this.state.length as upper bound;
-    this.generateNewArray(this.state.length);
+    this.generateNewArray();
 
   }
 
@@ -37,19 +35,17 @@ class App extends React.Component {
   //Create a recursive loop that console logs the value of each array element, one after another.
   // 
 
-  async onClickHandler(){
+  onClickHandler = async () => {
     let values = [...this.state.values];
-    
     for (let i = 0; i < values.length; i++){
       await new Promise( (resolve) => {
-        setTimeout( function(){
+        setTimeout( () => {
           resolve();
         },50);
 
-        values[i] = values[i]+5;
+        values[i] = values[i]+5;  
         this.setState({values});
         
-        // console.log(values[i]);
       })
     }
 
@@ -59,13 +55,13 @@ class App extends React.Component {
   }
 
 
-  generateNewArray(length){
+  generateNewArray = () => {
 
     let values = [];
-
+    let length = this.state.length;
     for (var i = 0; i < length; i++) values.push(i);    
 
-    this.setState({ values: shuffleArray(values) });
+    this.setState({ values: _.shuffle(values) });
 
   }
 
@@ -92,6 +88,7 @@ class App extends React.Component {
         <header className="App-header">
           Visual Sort
           <button onClick={this.onClickHandler}>Run Loop</button>
+          <button onClick={this.generateNewArray}>New Array</button>
         </header>
         <main id="contentWrapper">
           <div id="graphDiv">
