@@ -1,11 +1,13 @@
 # Visual Sort
 
-This project's idea comes from Clément Mihailescu, a YouTuber and former Google Engineer. (https://www.youtube.com/watch?v=n4t_-NjY_Sg&t=531s)
+This project's idea comes from Clément Mihailescu, a YouTuber and former Google Engineer. (https://www.youtube.com/watch?v=n4t_-NjY_Sg&t=531s) (https://clementmihailescu.github.io/Sorting-Visualizer/)
 
 I am building this project up in an attempt to improve my skills in React and to gain familiarity with sorting algorithms.
 
 
 ## Features
+
+Bubble Sort
 
 Merge Sort
 Quick Sort
