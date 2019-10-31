@@ -16,7 +16,6 @@ class App extends React.Component {
       scanning: false,
     }
 
-
   }
 
   //BAR 'OBJECT'{value, status}
@@ -47,7 +46,6 @@ class App extends React.Component {
   this.setState({ values: _.shuffle(values) });
 
 }
-
   //Found code for this here:
   //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
   //Section 4
@@ -86,19 +84,27 @@ class App extends React.Component {
             if (bars[i].value > bars[i+1].value){
               let temp = bars[i].value
               
+              bars[i].status = 'swapping';
+              bars[i + 1].status = 'swapping';
+
               bars[i].value = bars[i + 1].value;
               bars[i + 1].value = temp;
 
               sorted = false;
 
+              // bars[i].status = 'swapping';
+              // bars[i + 1].status = 'swapping';
+
               this.setState({bars})
+              resolve();
 
             }
-            
             bars[i].status = 'normal';
+            bars[i + 1].status = 'normal';
 
             this.setState({bars});   
             resolve();
+            
   
           },10);
   
@@ -113,29 +119,29 @@ class App extends React.Component {
   //Our next function needs to go into the state of the application and make sure only a single
   //'active' status exists during its scroll up
 
-  bubbleSort = () => {
+  // bubbleSort = () => {
 
-    let sorted = false;
-    let values = [...this.state.values]
+  //   let sorted = false;
+  //   let values = [...this.state.values]
 
-    while (!sorted) {
-      sorted = true;
-      for(var i=0; i < values.length - 1; i++) {
-        if(values[i].value > values[i+1].value) {
-          let temp = values[i].value;
+  //   while (!sorted) {
+  //     sorted = true;
+  //     for(var i=0; i < values.length - 1; i++) {
+  //       if(values[i].value > values[i+1].value) {
+  //         let temp = values[i].value;
 
-          values[i].value = values[i+1].value;
-          values[i+1].value = temp;
+  //         values[i].value = values[i+1].value;
+  //         values[i+1].value = temp;
           
-          sorted = false;
+  //         sorted = false;
           
-          this.setState({values:values})
-        }
+  //         this.setState({values:values})
+  //       }
 
-      }
-    }
+  //     }
+  //   }
 
-  }
+  // }
 
   render(){
 
@@ -176,3 +182,9 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+//TO DO:
+
+//Improve granularity of color highlighting algorithm
+//Improve runtime of bubble sort by reducing size of array to be inspected each pass
