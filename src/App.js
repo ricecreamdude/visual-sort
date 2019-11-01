@@ -12,7 +12,7 @@ class App extends React.Component {
 
     this.state = {
       values: [],
-      length: 40,
+      length: 20,
       scanning: false,
     }
 
@@ -80,7 +80,8 @@ class App extends React.Component {
           
           //All of our code actions should happen in setTimeout
           setTimeout( () => {
-  
+            
+            //Bubble Sort Algorithm
             if (bars[i].value > bars[i+1].value){
               let temp = bars[i].value
               
@@ -92,13 +93,13 @@ class App extends React.Component {
 
               sorted = false;
 
-              // bars[i].status = 'swapping';
-              // bars[i + 1].status = 'swapping';
 
               this.setState({bars})
               resolve();
 
             }
+
+            //Default, no actions taken algorithm
             bars[i].status = 'normal';
             bars[i + 1].status = 'normal';
 
