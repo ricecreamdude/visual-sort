@@ -6,6 +6,8 @@ import './App.css';
 import _ from 'underscore';
 
 import Bar from './component/Bar/bar';
+import AppSider from './component/Sider/sider'
+
 
 import { Layout, Button, Menu, Icon } from "antd";
 
@@ -61,7 +63,7 @@ class App extends React.Component {
   //Section 4
 
   //Create a recursive loop that console logs the value of each array element, one after another.
-  scanArray = async () => {
+  sortArray = async () => {
     
     //Prevent multiple scans from occuring
     if(this.state.scanning){
@@ -154,11 +156,6 @@ class App extends React.Component {
 
   // }
 
-
-  onCollapse = collapsed => {
-    this.setState( {collapsed} );
-  }
-
   render(){
 
     let renderedGraph = this.state.values.map( bar => { 
@@ -169,7 +166,6 @@ class App extends React.Component {
       // Add the minimum height to the chart and multiply bar value by
       // multiplier
       let heightValue = (multiplier * bar.value) + 50 
-
       return(
         <Bar 
           height={heightValue}
@@ -180,31 +176,12 @@ class App extends React.Component {
 
     return (
       <Layout className="App">
-        <Sider style={{height: '100vh'}} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}> 
-          
-          <div className="sidebarTitle"></div>
-          
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode='inline'>
-            <Menu.Item key="1">
-              <Icon type="pie-chart" />
-              <span>Bubble Sort</span>
-            </Menu.Item>
 
-            <Button
-              onClick={this.scanArray}
-            > 
-              <Icon type="play-circle" />
-            Run Loop</Button>
-
-            <Button
-                  onClick={this.generateNewArray}
-                > 
-                <Icon type="bar-chart" />
-                New Array
-                </Button>
-
-          </Menu>
-        </Sider>
+        <AppSider 
+          generateNewArray={this.generateNewArray}
+          sortArray={this.sortArray}
+        />
+      
         <Layout>
           <Content>
             <div className="App">
