@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Button from 'antd/es/button';
 
+import {Button} from 'antd';
 
 import _ from 'underscore';
 
