@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import Button from 'antd/es/button';
+
 
 import _ from 'underscore';
 
@@ -23,7 +25,6 @@ class App extends React.Component {
   componentDidMount(){
     //Load values with random values with this.state.length as upper bound;
     this.generateNewArray();
-
   }
 
   /*
@@ -167,8 +168,12 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           Visual Sort
-          <button onClick={this.scanArray}>Run Loop</button>
-          <button onClick={this.generateNewArray}>New Array</button>
+          <Button
+            onClick={this.scanArray}
+          > Run Loop</Button>
+          <Button
+            onClick={this.generateNewArray}
+          > New Array</Button>
         </header>
         <main id="contentWrapper">
           <div id="graphDiv">
