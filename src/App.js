@@ -1,11 +1,18 @@
 import React from 'react';
 import './App.css';
 
-import {Button} from 'antd';
 
+//UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
 
 import Bar from './component/Bar/bar';
+
+import { Layout, Button, Menu, Icon } from "antd";
+
+const { SubMenu } = Menu;
+const { Header, Footer, Content, Sider } = Layout;
+
+
 
 class App extends React.Component {
 
@@ -16,6 +23,8 @@ class App extends React.Component {
       values: [],
       length: 20,
       scanning: false,
+
+      collapsed: false,
     }
 
   }
@@ -145,6 +154,11 @@ class App extends React.Component {
 
   // }
 
+
+  onCollapse = collapsed => {
+    this.setState( {collapsed} );
+  }
+
   render(){
 
     let renderedGraph = this.state.values.map( bar => { 
@@ -165,23 +179,54 @@ class App extends React.Component {
     )})
 
     return (
-      <div className="App">
-        <header className="App-header">
-          Visual Sort
-          <Button
-            onClick={this.scanArray}
-          > Run Loop</Button>
-          <Button
-            onClick={this.generateNewArray}
-          > New Array</Button>
-        </header>
-        <main id="contentWrapper">
-          <div id="graphDiv">
-            {renderedGraph}
-          </div>
-        </main>
+      <Layout className="App">
+        <Sider style={{height: '100vh'}} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}> 
+          
+          <div className="sidebarTitle"></div>
+          
+          <Menu theme="dark" defaultSelectedKeys={['1']} mode='inline'>
+            <Menu.Item key="1">
+              <Icon type="pie-chart" />
+              <span>Bubble Sort</span>
+            </Menu.Item>
 
-      </div>
+            <Button
+              onClick={this.scanArray}
+            > 
+              <Icon type="play-circle" />
+            Run Loop</Button>
+
+            <Button
+                  onClick={this.generateNewArray}
+                > 
+                <Icon type="bar-chart" />
+                New Array
+                </Button>
+
+          </Menu>
+        </Sider>
+        <Layout>
+          <Content>
+            <div className="App">
+              <header className="App-header">
+                Visual Sort
+              </header>
+              <main id="contentWrapper">
+                <div id="graphDiv">
+                  {renderedGraph}
+                </div>
+              </main>
+            </div>
+          </Content>
+        </Layout>
+        
+
+
+
+
+
+      </Layout>
+      
     );
   }
   
