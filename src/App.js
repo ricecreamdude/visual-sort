@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import $ from 'jQuery';
 
 //UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
@@ -13,8 +14,6 @@ import { Layout, Button, Menu, Icon } from "antd";
 
 const { SubMenu } = Menu;
 const { Header, Footer, Content, Sider } = Layout;
-
-
 
 class App extends React.Component {
 
