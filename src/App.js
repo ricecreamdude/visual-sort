@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 
-import $ from 'jQuery';
-
 //UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
 
@@ -24,7 +22,6 @@ class App extends React.Component {
       values: [],
       length: 20,
       scanning: false,
-
       collapsed: false,
     }
 
@@ -42,21 +39,25 @@ class App extends React.Component {
   * Button Functionality - Create an array of values and update state according to
   * currently set length
   */
- generateNewArray = () => {
+  generateNewArray = () => {
 
-  let values = [];
-  let length = this.state.length;
-  for (var i = 0; i < length; i++) {
-    let newBar = {
-      value: i,
-      status: 'normal'
-    }
-    values.push(newBar)
-  };    
+    let values = [];
+    let length = this.state.length;
 
-  this.setState({ values: _.shuffle(values) });
+    //Allow for interrupting sort with new array button:
+    this.setState({scanning: false});
 
-}
+    for (var i = 0; i < length; i++) {
+      let newBar = {
+        value: i,
+        status: 'normal'
+      }
+      values.push(newBar)
+    };    
+
+    this.setState({ values: _.shuffle(values) });
+
+  }
   //Found code for this here:
   //https://stackoverflow.com/questions/40328932/javascript-es6-promise-for-loop/40329190
   //Section 4
@@ -118,7 +119,7 @@ class App extends React.Component {
             resolve();
             
   
-          },10);
+          },2);
   
         })
       }
@@ -155,6 +156,13 @@ class App extends React.Component {
 
   // }
 
+
+  /* Pass to sider in order to update length*/
+  handleSliderChange = (length) => {
+    this.setState({length}) 
+    this.generateNewArray();
+  }
+
   render(){
 
     let renderedGraph = this.state.values.map( bar => { 
@@ -179,6 +187,9 @@ class App extends React.Component {
         <AppSider 
           generateNewArray={this.generateNewArray}
           sortArray={this.sortArray}
+          handleSliderChange={this.handleSliderChange}
+          chartLength={this.state.length}
+          
         />
       
         <Layout>
@@ -195,12 +206,6 @@ class App extends React.Component {
             </div>
           </Content>
         </Layout>
-        
-
-
-
-
-
       </Layout>
       
     );
