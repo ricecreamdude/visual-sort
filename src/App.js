@@ -1,9 +1,19 @@
 import React from 'react';
 import './App.css';
 
+import $ from 'jQuery';
+
+//UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
 
 import Bar from './component/Bar/bar';
+import AppSider from './component/Sider/sider'
+
+
+import { Layout, Button, Menu, Icon } from "antd";
+
+const { SubMenu } = Menu;
+const { Header, Footer, Content, Sider } = Layout;
 
 class App extends React.Component {
 
@@ -12,8 +22,10 @@ class App extends React.Component {
 
     this.state = {
       values: [],
-      length: 40,
+      length: 20,
       scanning: false,
+
+      collapsed: false,
     }
 
   }
@@ -23,7 +35,6 @@ class App extends React.Component {
   componentDidMount(){
     //Load values with random values with this.state.length as upper bound;
     this.generateNewArray();
-
   }
 
   /*
@@ -51,7 +62,7 @@ class App extends React.Component {
   //Section 4
 
   //Create a recursive loop that console logs the value of each array element, one after another.
-  scanArray = async () => {
+  sortArray = async () => {
     
     //Prevent multiple scans from occuring
     if(this.state.scanning){
@@ -80,7 +91,8 @@ class App extends React.Component {
           
           //All of our code actions should happen in setTimeout
           setTimeout( () => {
-  
+            
+            //Bubble Sort Algorithm
             if (bars[i].value > bars[i+1].value){
               let temp = bars[i].value
               
@@ -92,13 +104,13 @@ class App extends React.Component {
 
               sorted = false;
 
-              // bars[i].status = 'swapping';
-              // bars[i + 1].status = 'swapping';
 
               this.setState({bars})
               resolve();
 
             }
+
+            //Default, no actions taken algorithm
             bars[i].status = 'normal';
             bars[i + 1].status = 'normal';
 
@@ -153,7 +165,6 @@ class App extends React.Component {
       // Add the minimum height to the chart and multiply bar value by
       // multiplier
       let heightValue = (multiplier * bar.value) + 50 
-
       return(
         <Bar 
           height={heightValue}
@@ -163,19 +174,35 @@ class App extends React.Component {
     )})
 
     return (
-      <div className="App">
-        <header className="App-header">
-          Visual Sort
-          <button onClick={this.scanArray}>Run Loop</button>
-          <button onClick={this.generateNewArray}>New Array</button>
-        </header>
-        <main id="contentWrapper">
-          <div id="graphDiv">
-            {renderedGraph}
-          </div>
-        </main>
+      <Layout className="App">
 
-      </div>
+        <AppSider 
+          generateNewArray={this.generateNewArray}
+          sortArray={this.sortArray}
+        />
+      
+        <Layout>
+          <Content>
+            <div className="App">
+              <header className="App-header">
+                Visual Sort
+              </header>
+              <main id="contentWrapper">
+                <div id="graphDiv">
+                  {renderedGraph}
+                </div>
+              </main>
+            </div>
+          </Content>
+        </Layout>
+        
+
+
+
+
+
+      </Layout>
+      
     );
   }
   
