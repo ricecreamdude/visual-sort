@@ -8,10 +8,9 @@ import Bar from './component/Bar/bar';
 import AppSider from './component/Sider/sider'
 
 
-import { Layout, Button, Menu, Icon } from "antd";
+import { Layout } from "antd";
 
-const { SubMenu } = Menu;
-const { Header, Footer, Content, Sider } = Layout;
+const { Content } = Layout;
 
 class App extends React.Component {
 
@@ -117,8 +116,6 @@ class App extends React.Component {
 
             this.setState({bars});   
             resolve();
-            
-  
           },2);
   
         })
@@ -157,7 +154,9 @@ class App extends React.Component {
   // }
 
 
-  /* Pass to sider in order to update length*/
+  /*  Pass to sider in order to update length
+      Value of slider on sider.js is passed to this function automatically   
+  */
   handleSliderChange = (length) => {
     this.setState({length}) 
     this.generateNewArray();

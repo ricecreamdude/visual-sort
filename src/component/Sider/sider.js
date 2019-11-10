@@ -2,8 +2,7 @@ import React from 'react';
 
 import { Layout, Button, Menu, Icon, Slider } from "antd";
 
-const { SubMenu } = Menu;
-const { Header, Footer, Content, Sider } = Layout;
+const { Sider } = Layout;
 
 //Using the convention app to denote that this imported sider is not part
 //of Ant D
