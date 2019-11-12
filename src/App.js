@@ -51,7 +51,7 @@ class App extends React.Component {
         value: i,
         status: 'normal'
       }
-      values.push(newBar)
+      values.push(newBar);
     };    
 
     this.setState({ values: _.shuffle(values) });
