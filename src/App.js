@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 
-import $ from 'jQuery';
-
 //UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
 
