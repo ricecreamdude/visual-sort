@@ -4,9 +4,10 @@ import './App.css';
 //UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
 
+import BarConstructor from './component/Bar/barConstructor'
+
 import Bar from './component/Bar/bar';
 import AppSider from './component/Sider/sider'
-
 
 import { Layout } from "antd";
 
@@ -46,14 +47,8 @@ class App extends React.Component {
     //Allow for interrupting sort with new array button:
     this.setState({scanning: false});
 
-    for (var i = 0; i < length; i++) {
-      let newBar = {
-        value: i,
-        status: 'normal'
-      }
-      values.push(newBar);
-    };    
-
+    for (var i = 0; i < length; i++)  values.push( new BarConstructor(i) )
+     
     this.setState({ values: _.shuffle(values) });
 
   }
@@ -83,7 +78,9 @@ class App extends React.Component {
       for (let i = 0; i < bars.length -1; i++){
 
         //Begin operations on array value
-        bars[i].status = 'active';
+        // bars[i].status = 'active';
+
+        bars[i].setActive();
         this.setState({bars});
 
         //Or could our operations happen inside the promise?
@@ -104,15 +101,16 @@ class App extends React.Component {
 
               sorted = false;
 
-
               this.setState({bars})
               resolve();
 
             }
 
             //Default, no actions taken algorithm
-            bars[i].status = 'normal';
-            bars[i + 1].status = 'normal';
+            // bars[i].status = 'normal';
+            // bars[i + 1].status = 'normal';
+
+            bars[i].setNormal();
 
             this.setState({bars});   
             resolve();
