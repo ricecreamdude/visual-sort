@@ -60,13 +60,11 @@ class App extends React.Component {
   sortArray = async () => {
     
     //Prevent multiple scans from occuring
-    if(this.state.scanning){
-      return
-    }
- 
+    if(this.state.scanning) return; 
     this.setState({scanning: true});
     
     let bars = [...this.state.values];
+    let len = bars.length;
     let sorted = false;
 
     while(!sorted){
@@ -75,7 +73,7 @@ class App extends React.Component {
       sorted = true;
 
       //Iterate through each bar stored in state
-      for (let i = 0; i < bars.length -1; i++){
+      for (let i = 0; i < len -1; i++){
 
         //Begin operations on array value
         // bars[i].status = 'active';
@@ -106,18 +104,31 @@ class App extends React.Component {
 
             }
 
-            //Default, no actions taken algorithm
-            // bars[i].status = 'normal';
-            // bars[i + 1].status = 'normal';
-
             bars[i].setNormal();
 
             this.setState({bars});   
+
+            if (i === len){
+              len = len - 1;
+              console.log('LENGTH', len);
+            }
+  
+
             resolve();
           },2);
-  
+
+
+
+
         })
+
+
+
       }
+
+
+
+
     }
     
     this.setState({scanning: false})
