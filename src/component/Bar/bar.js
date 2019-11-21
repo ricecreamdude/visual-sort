@@ -7,8 +7,8 @@ function Bar(props){
   let styles = {
     bar: {
       height: props.height,
-      borderLeft: '10px solid black',
-      marginRight:'10px',
+      borderLeft: `${props.barWidth}px solid black`,
+      marginRight: `${props.barMargin}px`,
       float: 'left'
     }
   }

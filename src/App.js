@@ -21,6 +21,8 @@ class App extends React.Component {
     this.state = {
       values: [],
       length: 20,
+      barWidth: 20,
+      barMargin: 10,
       scanning: false,
       collapsed: false,
     }
@@ -76,7 +78,7 @@ class App extends React.Component {
       for (let i = 0; i < len -1; i++){
 
         //Begin operations on array value
-        // bars[i].status = 'active';
+
 
         bars[i].setActive();
         this.setState({bars});
@@ -118,15 +120,10 @@ class App extends React.Component {
           },2);
 
 
-
-
         })
 
 
-
       }
-
-
 
 
     }
@@ -168,8 +165,45 @@ class App extends React.Component {
   */
   handleSliderChange = (length) => {
     this.setState({length}) 
+
+    this.calculateBarWidth();
+
     this.generateNewArray();
+  
   }
+
+  calculateBarWidth = () => {
+
+    let barWidth,
+        barMargin;
+
+    let minViewWidth = 600; // actual min width is 650px but we are giving the app a buffer
+
+    let maxBarWidth = 40;  // Anything larger than this looks strange
+    let minBarWidth = 5;   // Anything smaller is hard to see
+
+    let testWidth  = minViewWidth / this.state.length / 2 
+
+    if (testWidth > maxBarWidth) testWidth = 40; 
+    if (testWidth < minBarWidth) testWidth = 5;
+
+    barWidth = testWidth;
+
+    barMargin = Math.max(barWidth * 0.25, 5);
+    if (barMargin < 5) barMargin = 5;
+
+
+    this.setState({barWidth, barMargin})
+
+  }
+
+  calculateBarMargin = () => {
+
+
+
+  }
+
+
 
   render(){
 
@@ -186,6 +220,8 @@ class App extends React.Component {
           height={heightValue}
           value={bar.value}
           status={bar.status}
+          barWidth={this.state.barWidth}
+          barMargin={this.state.barMargin}
         />
     )})
 
@@ -197,7 +233,6 @@ class App extends React.Component {
           sortArray={this.sortArray}
           handleSliderChange={this.handleSliderChange}
           chartLength={this.state.length}
-          
         />
       
         <Layout>

@@ -21,6 +21,7 @@ class AppSider extends React.Component{
             <span>Bubble Sort</span>
           </Menu.Item>
           <div>
+            
             <Slider 
               max={50} 
               defaultValue={this.props.chartLength}
