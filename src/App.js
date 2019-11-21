@@ -189,17 +189,19 @@ class App extends React.Component {
 
     barWidth = testWidth;
 
-    barMargin = Math.max(barWidth * 0.25, 5);
-    if (barMargin < 5) barMargin = 5;
-
-
-    this.setState({barWidth, barMargin})
+    this.setState({
+      barWidth, 
+      barMargin: this.calculateBarMargin()
+    })
 
   }
 
   calculateBarMargin = () => {
 
+    let barMargin = Math.max(this.state.barWidth * 0.25, 5);
+    if (barMargin < 5) barMargin = 5;
 
+    return barMargin;
 
   }
 
