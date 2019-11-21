@@ -174,15 +174,13 @@ class App extends React.Component {
 
   calculateBarWidth = () => {
 
-    let barWidth,
-        barMargin;
-
+    let barWidth;
     let minViewWidth = 600; // actual min width is 650px but we are giving the app a buffer
 
     let maxBarWidth = 40;  // Anything larger than this looks strange
     let minBarWidth = 5;   // Anything smaller is hard to see
 
-    let testWidth  = minViewWidth / this.state.length / 2 
+    let testWidth  = minViewWidth / this.state.length / 2;
 
     if (testWidth > maxBarWidth) testWidth = 40; 
     if (testWidth < minBarWidth) testWidth = 5;
