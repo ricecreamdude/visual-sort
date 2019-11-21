@@ -4,9 +4,10 @@ import './App.css';
 //UI Layout comes from https://codepen.io/pen/?&editable=true&editors=001;
 import _ from 'underscore';
 
+import BarConstructor from './component/Bar/barConstructor'
+
 import Bar from './component/Bar/bar';
 import AppSider from './component/Sider/sider'
-
 
 import { Layout } from "antd";
 
@@ -20,6 +21,8 @@ class App extends React.Component {
     this.state = {
       values: [],
       length: 20,
+      barWidth: 20,
+      barMargin: 10,
       scanning: false,
       collapsed: false,
     }
@@ -46,14 +49,8 @@ class App extends React.Component {
     //Allow for interrupting sort with new array button:
     this.setState({scanning: false});
 
-    for (var i = 0; i < length; i++) {
-      let newBar = {
-        value: i,
-        status: 'normal'
-      }
-      values.push(newBar);
-    };    
-
+    for (var i = 0; i < length; i++)  values.push( new BarConstructor(i) )
+     
     this.setState({ values: _.shuffle(values) });
 
   }
@@ -65,13 +62,11 @@ class App extends React.Component {
   sortArray = async () => {
     
     //Prevent multiple scans from occuring
-    if(this.state.scanning){
-      return
-    }
- 
+    if(this.state.scanning) return; 
     this.setState({scanning: true});
     
     let bars = [...this.state.values];
+    let len = bars.length;
     let sorted = false;
 
     while(!sorted){
@@ -80,10 +75,12 @@ class App extends React.Component {
       sorted = true;
 
       //Iterate through each bar stored in state
-      for (let i = 0; i < bars.length -1; i++){
+      for (let i = 0; i < len -1; i++){
 
         //Begin operations on array value
-        bars[i].status = 'active';
+
+
+        bars[i].setActive();
         this.setState({bars});
 
         //Or could our operations happen inside the promise?
@@ -104,22 +101,31 @@ class App extends React.Component {
 
               sorted = false;
 
-
               this.setState({bars})
               resolve();
 
             }
 
-            //Default, no actions taken algorithm
-            bars[i].status = 'normal';
-            bars[i + 1].status = 'normal';
+            bars[i].setNormal();
 
             this.setState({bars});   
+
+            if (i === len){
+              len = len - 1;
+              console.log('LENGTH', len);
+            }
+  
+
             resolve();
           },2);
-  
+
+
         })
+
+
       }
+
+
     }
     
     this.setState({scanning: false})
@@ -159,8 +165,45 @@ class App extends React.Component {
   */
   handleSliderChange = (length) => {
     this.setState({length}) 
+
+    this.calculateBarWidth();
+
     this.generateNewArray();
+  
   }
+
+  calculateBarWidth = () => {
+
+    let barWidth;
+    let minViewWidth = 600; // actual min width is 650px but we are giving the app a buffer
+
+    let maxBarWidth = 40;  // Anything larger than this looks strange
+    let minBarWidth = 5;   // Anything smaller is hard to see
+
+    let testWidth  = minViewWidth / this.state.length / 2;
+
+    if (testWidth > maxBarWidth) testWidth = 40; 
+    if (testWidth < minBarWidth) testWidth = 5;
+
+    barWidth = testWidth;
+
+    this.setState({
+      barWidth, 
+      barMargin: this.calculateBarMargin()
+    })
+
+  }
+
+  calculateBarMargin = () => {
+
+    let barMargin = Math.max(this.state.barWidth * 0.25, 5);
+    if (barMargin < 5) barMargin = 5;
+
+    return barMargin;
+
+  }
+
+
 
   render(){
 
@@ -177,6 +220,8 @@ class App extends React.Component {
           height={heightValue}
           value={bar.value}
           status={bar.status}
+          barWidth={this.state.barWidth}
+          barMargin={this.state.barMargin}
         />
     )})
 
@@ -188,7 +233,6 @@ class App extends React.Component {
           sortArray={this.sortArray}
           handleSliderChange={this.handleSliderChange}
           chartLength={this.state.length}
-          
         />
       
         <Layout>

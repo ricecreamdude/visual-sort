@@ -5,7 +5,7 @@ This project's idea comes from Clément Mihailescu, a YouTuber and former Google
 I am building this project up in an attempt to improve my skills in React and to gain familiarity with sorting algorithms.
 
 
-## Features
+## Featuresx
 
 Bubble Sort
 
